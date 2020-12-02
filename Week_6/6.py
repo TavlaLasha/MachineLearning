@@ -1,5 +1,6 @@
 import pandas as pd
 import random as rd
+import statistics as st
 from faker import Faker
 
 faker = Faker()
@@ -9,7 +10,7 @@ nums = list(range(1, 101))
 rd.shuffle(nums)
 
 
-def excelCreator():
+def excel_creator():
     print("---------------1--------------")
     data = []
 
@@ -65,3 +66,24 @@ def excelCreator():
     df = pd.DataFrame(arr)
     df.to_excel(wr, sheet_name="sheet4", index=False)
     wr.save()
+
+
+print("---------------6--------------")
+print(staffExcel)
+print(st.mean(staffExcel["Age"]))
+print(round(st.mean(staffExcel["Age"])))
+# print(st.multimode(staffExcel["Age"]))
+print(st.median(staffExcel["Age"]))
+print(max(staffExcel["Age"]))
+print(min(staffExcel["Age"]))
+
+print("---------------7--------------")
+data = []
+for i in staffExcel["Age"]:
+    if 30 < i < 50:
+        data.append(i)
+
+df = pd.DataFrame({ 'Age': data})
+writer = pd.ExcelWriter('staff_age.xlsx', engine='openpyxl')
+df.to_excel(writer, index=False)
+writer.save()
